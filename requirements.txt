@@ -1,0 +1,10 @@
+streamlit>=1.25
+python-dotenv
+openai>=1.0.0
+fastapi
+uvicorn
+requests
+google-cloud-speech>=2.0.0
+google-cloud-texttospeech>=2.0.0
+pydub
+watchdog

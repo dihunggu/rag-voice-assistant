@@ -27,9 +27,7 @@
 1.  安裝相依套件：
     ```bash
     pip install -r requirements.txt
-    pip install google-cloud-speech google-cloud-texttospeech pydub openai watchdog
     ```
-    *（註：建議安裝 `watchdog` 以支援 uvicorn 自動重載）*
 
 2.  建立 `.env` 檔案：
     ```env
@@ -41,6 +39,8 @@
 
 ## 使用說明
 
+本專案包含兩個主要的前端介面與一個後端 API。
+
 ### 1. 啟動後端 API
 後端負責處理 RAG 邏輯與資料庫連線。
 開啟終端機並執行：
@@ -49,22 +49,31 @@ uvicorn api_server:app --reload
 ```
 *預設連接埠為 8000。*
 
-### 2. 啟動前端 UI
-前端提供對話介面與語音控制功能。
+### 2. 資料管理後台 (app.py)
+這是用來管理知識庫的介面。
+開啟終端機並執行：
+```powershell
+streamlit run app.py
+```
+**功能特色**：
+-   **專案管理**：建立、改名或封存專案。
+-   **與 OpenAI 同步**：自動建立 OpenAI Vector Store。
+-   **文件上傳**：上傳 PDF 文件，系統會自動加入 OpenAI 索引。
+-   **檔案管理**：檢視目前專案內的檔案，或將其移除。
+
+### 3. 對話聊天前台 (ui_streamlit.py)
+這是給終端使用者問問題的介面。
 開啟 **另一個** 終端機並執行：
 ```powershell
 streamlit run ui_streamlit.py
 ```
-
-### 3. 開始使用
--   **專案管理**：使用側邊欄建立專案並上傳 PDF 檔案。
--   **語音設定**：
-    -   在側邊欄找到 "語音設定"。
-    -   **STT/TTS 服務商**：選擇 "Google" 或 "OpenAI"。
-    -   **語言**：選擇 "zh-TW"（中文）或 "en-US"（英文）。
--   **對話**：
-    -   在文字框輸入問題。
-    -   或點擊 **麥克風** 圖示 (`st.audio_input`) 用說的。
+**功能特色**：
+-   **對話**：輸入問題，AI 會根據 `app.py` 上傳的文件回答。
+-   **專案選擇**：在側邊欄選擇要針對哪個專案進行問答。
+-   **語音互動**：支援用說的問問題，並用語音聽回答。
+-   **多服務商支援**：
+    -   可選擇 **Google** 或 **OpenAI** 作為語音引擎。
+    -   設定位於側邊欄 "語音設定"。
 
 ## 疑難排解 (Troubleshooting)
 
